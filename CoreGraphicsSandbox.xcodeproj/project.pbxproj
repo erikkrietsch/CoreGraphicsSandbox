@@ -13,6 +13,7 @@
 		79E5DC661AC5970C00FC6DC2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79E5DC651AC5970C00FC6DC2 /* Images.xcassets */; };
 		79E5DC691AC5970C00FC6DC2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E5DC671AC5970C00FC6DC2 /* LaunchScreen.xib */; };
 		79E5DC751AC5970C00FC6DC2 /* CoreGraphicsSandboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E5DC741AC5970C00FC6DC2 /* CoreGraphicsSandboxTests.swift */; };
+		79E5DC7F1AC5978D00FC6DC2 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E5DC7E1AC5978D00FC6DC2 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		79E5DC6E1AC5970C00FC6DC2 /* CoreGraphicsSandboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreGraphicsSandboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79E5DC731AC5970C00FC6DC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79E5DC741AC5970C00FC6DC2 /* CoreGraphicsSandboxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphicsSandboxTests.swift; sourceTree = "<group>"; };
+		79E5DC7E1AC5978D00FC6DC2 /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				79E5DC5E1AC5970C00FC6DC2 /* AppDelegate.swift */,
 				79E5DC601AC5970C00FC6DC2 /* ViewController.swift */,
 				79E5DC621AC5970C00FC6DC2 /* Main.storyboard */,
+				79E5DC7E1AC5978D00FC6DC2 /* ShadowView.swift */,
 				79E5DC651AC5970C00FC6DC2 /* Images.xcassets */,
 				79E5DC671AC5970C00FC6DC2 /* LaunchScreen.xib */,
 				79E5DC5C1AC5970C00FC6DC2 /* Supporting Files */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79E5DC7F1AC5978D00FC6DC2 /* ShadowView.swift in Sources */,
 				79E5DC611AC5970C00FC6DC2 /* ViewController.swift in Sources */,
 				79E5DC5F1AC5970C00FC6DC2 /* AppDelegate.swift in Sources */,
 			);
