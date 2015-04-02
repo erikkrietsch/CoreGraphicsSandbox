@@ -20,7 +20,7 @@ func rectPoint(point: RectPoint, rect: CGRect) -> CGPoint {
         result = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height)
     case .BottomLeft:
         result = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
-    case .Center:
+    default:
         result = CGPoint(x: rect.width / 2, y: rect.height / 2)
     }
     return result
@@ -32,7 +32,10 @@ func squareRadius(rect: CGRect) -> CGFloat {
 
 @IBDesignable
 class ShadowView: UIView {
-    @IBInspectable var shadowSize: CGFloat = 25.0 {
+    let OVERFLOW_FACTOR:  CGFloat = -0.25
+    let CORNER_MULTPLIER: CGFloat =  1.4
+    
+    @IBInspectable var shadowSize: CGFloat = 75 {
         didSet {
             setNeedsDisplay()
         }
@@ -44,7 +47,7 @@ class ShadowView: UIView {
         }
     }
     
-    @IBInspectable var shadowAlpha: CGFloat = 0.25 {
+    @IBInspectable var shadowAlpha: CGFloat = 0.33 {
         didSet {
             setNeedsDisplay()
         }
@@ -58,11 +61,25 @@ class ShadowView: UIView {
     override func drawRect(rect: CGRect) {
         let ctx = UIGraphicsGetCurrentContext()
         
+        let overdrawRect = rect //.rectByInsetting(dx: shadowSize * OVERFLOW_FACTOR, dy: shadowSize * OVERFLOW_FACTOR)
+        println("overdrawRect \(overdrawRect)")
+        println("rect \(rect)")
+        
         // borders
-        let leftShadowRect        = CGRect(x: 0, y: shadowSize, width: shadowSize, height: rect.height - (shadowSize * 2))
-        let topShadowRect         = CGRect(x: shadowSize, y: 0, width: rect.width - (shadowSize * 2), height: shadowSize)
-        let rightShadowRect       = CGRect(x: rect.width - shadowSize, y: shadowSize, width: shadowSize, height: leftShadowRect.height)
-        let bottomShadowRect      = CGRect(x: shadowSize, y: rect.height - shadowSize, width: topShadowRect.width, height: shadowSize)
+        let leftShadowRect        = CGRect(x: overdrawRect.origin.x, y: overdrawRect.origin.y + shadowSize, width: shadowSize, height: overdrawRect.height - (shadowSize * 2))
+        let topShadowRect         = CGRect(x: overdrawRect.origin.x + shadowSize, y: overdrawRect.origin.y, width: overdrawRect.width - (shadowSize * 2), height: shadowSize)
+        let rightShadowRect       = CGRect(x: overdrawRect.width - shadowSize, y: overdrawRect.origin.y + shadowSize, width: shadowSize, height: leftShadowRect.height)
+        let bottomShadowRect      = CGRect(x: overdrawRect.origin.x + shadowSize, y: overdrawRect.height - shadowSize, width: topShadowRect.width, height: shadowSize)
+
+        println("leftShadowRect   \(leftShadowRect)")
+        println("topShadowRect    \(topShadowRect)")
+        println("rightShadowRect  \(rightShadowRect)")
+        println("bottomShadowRect \(bottomShadowRect)")
+        
+//        CGContextSaveGState(ctx)
+//        CGContextSetStrokeColorWithColor(ctx, UIColor.greenColor().CGColor)
+//        CGContextStrokeRect(ctx, CGRect(x: 0, y: 0, width: shadowSize, height: shadowSize))
+//        CGContextRestoreGState(ctx)
         
         // corners
         let topLeftCornerRect     = CGRect(x: leftShadowRect.origin.x, y: topShadowRect.origin.y, width: leftShadowRect.width, height: topShadowRect.height)
@@ -101,30 +118,29 @@ class ShadowView: UIView {
         CGContextRestoreGState(ctx)
         
         let drawingOptions = CGGradientDrawingOptions(kCGGradientDrawsBeforeStartLocation)
-        let cornerMupltiplier = CGFloat(1.4)
 
         // top-left
         CGContextSaveGState(ctx)
         CGContextClipToRect(ctx, topLeftCornerRect)
-        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.BottomRight, topLeftCornerRect), squareRadius(topLeftCornerRect) * cornerMupltiplier, rectPoint(.BottomRight, topLeftCornerRect), 0.0, drawingOptions)
+        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.BottomRight, topLeftCornerRect), squareRadius(topLeftCornerRect) * CORNER_MULTPLIER, rectPoint(.BottomRight, topLeftCornerRect), 0.0, drawingOptions)
         CGContextRestoreGState(ctx)
 
         // top-right
         CGContextSaveGState(ctx)
         CGContextClipToRect(ctx, topRightCornerRect)
-        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.BottomLeft, topRightCornerRect), squareRadius(topRightCornerRect) * cornerMupltiplier, rectPoint(.BottomLeft, topRightCornerRect), 0.0, drawingOptions)
+        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.BottomLeft, topRightCornerRect), squareRadius(topRightCornerRect) * CORNER_MULTPLIER, rectPoint(.BottomLeft, topRightCornerRect), 0.0, drawingOptions)
         CGContextRestoreGState(ctx)
 
         // bottom-right
         CGContextSaveGState(ctx)
         CGContextClipToRect(ctx, bottomRightCornerRect)
-        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.TopLeft, bottomRightCornerRect), squareRadius(bottomRightCornerRect) * cornerMupltiplier, rectPoint(.TopLeft, bottomRightCornerRect), 0.0, drawingOptions)
+        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.TopLeft, bottomRightCornerRect), squareRadius(bottomRightCornerRect) * CORNER_MULTPLIER, rectPoint(.TopLeft, bottomRightCornerRect), 0.0, drawingOptions)
         CGContextRestoreGState(ctx)
 
         // bottom-left
         CGContextSaveGState(ctx)
         CGContextClipToRect(ctx, bottomLeftCornerRect)
-        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.TopRight, bottomLeftCornerRect), squareRadius(bottomLeftCornerRect) * cornerMupltiplier, rectPoint(.TopRight, bottomLeftCornerRect), 0.0, drawingOptions)
+        CGContextDrawRadialGradient(ctx, gradient, rectPoint(.TopRight, bottomLeftCornerRect), squareRadius(bottomLeftCornerRect) * CORNER_MULTPLIER, rectPoint(.TopRight, bottomLeftCornerRect), 0.0, drawingOptions)
         CGContextRestoreGState(ctx)
 
         

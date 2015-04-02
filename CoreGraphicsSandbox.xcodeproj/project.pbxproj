@@ -409,6 +409,7 @@
 				79E5DC7A1AC5970C00FC6DC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		79E5DC7B1AC5970C00FC6DC2 /* Build configuration list for PBXNativeTarget "CoreGraphicsSandboxTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +418,7 @@
 				79E5DC7D1AC5970C00FC6DC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
